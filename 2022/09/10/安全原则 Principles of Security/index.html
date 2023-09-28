@@ -1,0 +1,840 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Cohawv">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="The CIA TriadCIA三元组是一种信息安全模型，在创建安全策略的整个过程中都要考虑使用。该模型具有广泛的背景，从 1998 年开始使用。 这段历史是因为信息安全（信息安全）并非以网络安全开始和&#x2F;或结束，而是适用于归档、记录存储等场景。 该模型由三个部分组成： 机密性、 完整性和 可用性( CIA )，如今已迅速成为行业标准。该模型应有助于确定其所应用的数据的价值，进而确定其需要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安全原则">
+<meta property="og:url" content="https://cohawv.github.io/2022/09/10/%E5%AE%89%E5%85%A8%E5%8E%9F%E5%88%99%20Principles%20of%20Security/index.html">
+<meta property="og:site_name" content="Cohawv&#39;s Blog">
+<meta property="og:description" content="The CIA TriadCIA三元组是一种信息安全模型，在创建安全策略的整个过程中都要考虑使用。该模型具有广泛的背景，从 1998 年开始使用。 这段历史是因为信息安全（信息安全）并非以网络安全开始和&#x2F;或结束，而是适用于归档、记录存储等场景。 该模型由三个部分组成： 机密性、 完整性和 可用性( CIA )，如今已迅速成为行业标准。该模型应有助于确定其所应用的数据的价值，进而确定其需要">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.certmike.com/wp-content/uploads/2018/08/cia_triad.png">
+<meta property="og:image" content="https://tryhackme-images.s3.amazonaws.com/user-uploads/5de96d9ca744773ea7ef8c00/room-content/2092d19d7d7e9eaecead2baca007a406.png">
+<meta property="og:image" content="https://tryhackme-images.s3.amazonaws.com/user-uploads/5de96d9ca744773ea7ef8c00/room-content/8baaae53303b90143e5cb20821202bd4.png">
+<meta property="og:image" content="https://tryhackme-images.s3.amazonaws.com/user-uploads/5de96d9ca744773ea7ef8c00/room-content/d194e35fc5fd158b20e64a3c8c5123d1.png">
+<meta property="og:image" content="https://tryhackme-images.s3.amazonaws.com/user-uploads/5de96d9ca744773ea7ef8c00/room-content/0e6e5d9d80785fc287b4a67e1453b295.png">
+<meta property="og:image" content="https://tryhackme-images.s3.amazonaws.com/user-uploads/5de96d9ca744773ea7ef8c00/room-content/895ba351ef24ef6495d290222e49470e.png">
+<meta property="og:image" content="https://tryhackme-images.s3.amazonaws.com/user-uploads/5de96d9ca744773ea7ef8c00/room-content/aabdd83977336fd44b3645a86e5ba20e.png">
+<meta property="og:image" content="https://tryhackme-images.s3.amazonaws.com/user-uploads/5de96d9ca744773ea7ef8c00/room-content/ab0cc8478b0bce9a400187f559d36dd6.png">
+<meta property="article:published_time" content="2022-09-10T08:35:20.000Z">
+<meta property="article:modified_time" content="2023-09-28T10:55:36.502Z">
+<meta property="article:author" content="Cohawv">
+<meta property="article:tag" content="WriteUp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.certmike.com/wp-content/uploads/2018/08/cia_triad.png">
+  
+  
+  
+  <title>安全原则 - Cohawv&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"cohawv.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Cohawv&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="安全原则"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-09-10 16:35" pubdate>
+          2022年9月10日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          29 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">安全原则</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="The-CIA-Triad"><a href="#The-CIA-Triad" class="headerlink" title="The CIA Triad"></a>The CIA Triad</h1><p>CIA三元组是一种信息安全模型，在创建安全策略的整个过程中都要考虑使用。该模型具有广泛的背景，从 1998 年开始使用。</p>
+<p>这段历史是因为信息安全（信息安全）并非以网络安全开始和&#x2F;或结束，而是适用于归档、记录存储等场景。</p>
+<p>该模型由三个部分组成： <strong>机密</strong>性、 <strong>完整性</strong>和 <strong>可用性</strong>( <strong>CIA</strong> )，如今已迅速成为行业标准。该模型应有助于确定其所应用的数据的价值，进而确定其需要业务部门的关注。</p>
+<p><img src="https://www.certmike.com/wp-content/uploads/2018/08/cia_triad.png" srcset="/img/loading.gif" lazyload>  </p>
+<p>中央情报局三合会与传统模型不同，传统模型中有单独的部分；相反，它是一个连续的循环。虽然中央情报局三合会的三个要素可以说是重叠的，但如果只有一个要素不满足，那么其他两个要素就变得毫无用处（类似于火三角）。如果安全策略不回答这三个部分，那么它很少是有效的安全策略。</p>
+<p>虽然中央情报局三合会的三个要素可以说是不言自明的，但让我们探讨这些要素并将它们融入网络安全的背景中。</p>
+<p><img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/5de96d9ca744773ea7ef8c00/room-content/2092d19d7d7e9eaecead2baca007a406.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>保密</strong></p>
+<p>该元素是保护数据免遭未经授权的访问和滥用。组织将始终在其系统上存储某种形式的敏感数据。提供机密性是为了保护这些数据免受非预期对象的侵害。</p>
+<p>现实世界中有很多这样的例子，例如，员工记录和会计文件将被视为敏感。只有人力资源管理员才能访问员工记录，并实施严格的访问控制，因此将提供保密性。会计记录的价值较低（因此敏感度较低），因此不会对这些文件实施严格的访问控制。或者，例如，政府使用敏感性分类评级系统（绝密、机密、非机密）</p>
+<p><img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/5de96d9ca744773ea7ef8c00/room-content/8baaae53303b90143e5cb20821202bd4.png" srcset="/img/loading.gif" lazyload>  </p>
+<p><strong>正直</strong></p>
+<p>中央情报局完整性三要素是信息保持准确和一致的条件，除非进行授权更改。由于粗心的访问和使用、信息系统的错误或未经授权的访问和使用，信息可能会发生变化。在 CIA 三元组中，当信息在存储、传输和使用过程中保持不变（不涉及信息修改）时，完整性得到维护。必须采取措施确保数据不会被未经授权的人员更改（例如，违反机密性）。</p>
+<p>可以采取许多防御措施来确保完整性。访问控制和严格的身份验证有助于防止授权用户进行未经授权的更改。哈希验证和数字签名可以帮助确保交易是真实的并且文件没有被修改或损坏。</p>
+<p><img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/5de96d9ca744773ea7ef8c00/room-content/d194e35fc5fd158b20e64a3c8c5123d1.png" srcset="/img/loading.gif" lazyload>  </p>
+<p><strong>可用性</strong></p>
+<p>为了使数据有用，它必须可供用户使用和访问。</p>
+<p>中央情报局三合会的主要关注点是，当授权用户需要访问信息时，信息应该可用。</p>
+<p>可用性通常是组织的关键基准。例如，其网站或系统的正常运行时间为 99.99%（服务级别协议中对此进行了规定）。当系统不可用时，通常会导致组织声誉受损和财务损失。可用性是通过许多元素的组合来实现的，包括：</p>
+<ul>
+<li>为其信息技术服务器（即信誉良好的服务器）拥有可靠且经过良好测试的硬件</li>
+<li>在主设备发生故障的情况下拥有冗余技术和服务</li>
+<li>实施成熟的安全协议以保护技术和服务免受攻击</li>
+</ul>
+<h1 id="Principles-of-Privileges特权原则"><a href="#Principles-of-Privileges特权原则" class="headerlink" title="Principles of Privileges特权原则"></a>Principles of Privileges特权原则</h1><p>管理和正确定义个人所需的信息技术系统的各种访问级别至关重要。 </p>
+<p>给予个人的访问级别取决于两个主要因素：</p>
+<ul>
+<li>个人在组织内的角色&#x2F;职能</li>
+<li>系统上存储的信息的敏感性</li>
+</ul>
+<p>有两个关键概念用于分配和管理个人的访问权限，其中使用了两个关键概念：特权身份管理（PIM）和特权访问管理（或简称PAM）。</p>
+<p>最初，这两个概念似乎是重叠的。然而，它们彼此不同。PIM 用于将组织内的用户角色转换为系统上的访问角色。而 PAM 是对系统访问角色所拥有的权限等的管理。</p>
+<p>讨论权限和访问控制时最重要的是最小权限原则。简而言之，应向用户授予最低限度的权限，并且仅授予他们履行职责绝对必要的权限。其他人应该能够相信人们写的内容。</p>
+<p>正如我们之前提到的，PAM 不仅仅包含分配访问权限。它还包括实施安全策略，例如密码管理、审核策略和减少系统面临的攻击面。</p>
+<h1 id="Security-Models-Continued安全模型（续）"><a href="#Security-Models-Continued安全模型（续）" class="headerlink" title="Security Models Continued安全模型（续）"></a>Security Models Continued安全模型（续）</h1><p>根据安全模型，任何存储信息的系统或技术都称为信息系统，这就是我们在此任务中引用系统和设备的方式。</p>
+<p>让我们探讨一些用于实现CIA三合会三个要素的流行且有效的安全模型。</p>
+<p><strong>贝尔-拉帕杜拉****模型</strong></p>
+<p>Bell-La Padula 模型用于实现保密性。该模型有一些假设，例如它所使用的组织的层次结构，其中每个人的职责&#x2F;角色都有明确的定义。</p>
+<p>该模型的工作原理是在严格需要知道的基础上授予对数据片段（称为对象）的访问权限。该模型使用“不写，不读”的规则。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>优点</strong></td>
+<td><strong>缺点</strong></td>
+</tr>
+<tr>
+<td>该模型中的策略可以复制到现实生活中的组织层次结构（反之亦然）</td>
+<td>即使用户可能无权访问某个对象，他们也会知道它的存在——因此在这方面它不是保密的。</td>
+</tr>
+<tr>
+<td>易于实施和理解，并已被证明是成功的。</td>
+<td>该模型依赖于组织内部的大量信任。</td>
+</tr>
+</tbody></table>
+<p><img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/5de96d9ca744773ea7ef8c00/room-content/0e6e5d9d80785fc287b4a67e1453b295.png" srcset="/img/loading.gif" lazyload></p>
+<p>贝尔拉帕杜拉模型在政府和军队等组织中很受欢迎。这是因为这些组织的成员被认为已经经历了一个称为审查的过程。审查是一个筛选过程，审查申请人的背景以确定他们对组织构成的风险。因此，成功通过审查的申请人被认为是值得信赖的——这就是该模型的用武之地。</p>
+<p><strong>比巴模型</strong></p>
+<p>Biba 模型可以说相当于 Bell-La Padula 模型，但考虑到CIA三合会的完整性。</p>
+<p>该模型将规则应用于对象（数据）和主体（用户），可以概括为“不写，不读”。该规则意味着主体 <strong>可以</strong> 向等于或低于其级别的对象创建或写入内容，但 <strong>只能</strong> 读取高于主体级别的对象的内容。</p>
+<p>我们通过下表比较一下该模型的一些优缺点：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>优点</strong></td>
+<td><strong>缺点</strong></td>
+</tr>
+<tr>
+<td>该模型实现起来很简单。</td>
+<td>将有许多级别的访问和对象。应用安全控制时很容易忽视一些事情。</td>
+</tr>
+<tr>
+<td>通过解决机密性和数据完整性问题，解决了 Bell-La Padula 模型的局限性。</td>
+<td>通常会导致企业内的延误。例如，医生将无法使用此模型阅读医院护士所做的笔记。</td>
+</tr>
+</tbody></table>
+<p><img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/5de96d9ca744773ea7ef8c00/room-content/895ba351ef24ef6495d290222e49470e.png" srcset="/img/loading.gif" lazyload></p>
+<p>Biba 模型用于完整性比机密性更重要的组织或情况。例如，在软件开发中，开发人员可能只能访问其工作所需的代码。他们可能不需要访问数据库等关键信息。</p>
+<h1 id="Threat-Modelling-Incident-Response威胁建模和事件响应"><a href="#Threat-Modelling-Incident-Response威胁建模和事件响应" class="headerlink" title="Threat Modelling &amp; Incident Response威胁建模和事件响应"></a>Threat Modelling &amp; Incident Response威胁建模和事件响应</h1><p>威胁建模是审查、改进和测试组织信息技术基础设施和服务中现有安全协议的过程。</p>
+<p>威胁建模过程的关键阶段是识别应用程序或系统可能面临的威胁以及系统或应用程序可能容易受到攻击的漏洞。</p>
+<p><img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/5de96d9ca744773ea7ef8c00/room-content/aabdd83977336fd44b3645a86e5ba20e.png" srcset="/img/loading.gif" lazyload>  </p>
+<p>威胁建模过程与在工作场所为员工和客户进行的风险评估非常相似。这些原则都回归到：</p>
+<ul>
+<li>准备</li>
+<li>鉴别</li>
+<li>缓解措施</li>
+<li>审查</li>
+</ul>
+<p>然而，这是一个复杂的过程，需要与专门的团队不断审查和讨论。有效的威胁模型包括：</p>
+<ul>
+<li>威胁情报</li>
+<li>资产识别</li>
+<li>缓解能力</li>
+<li>风险评估</li>
+</ul>
+<p><strong>为了帮助解决这个问题</strong>，有一些框架，例如<strong>STRIDE</strong>（<strong>欺骗</strong>身份、<strong>篡改</strong>数据、<strong>否认</strong>威胁、 <strong>信息</strong>泄露、<strong>拒绝</strong>服务和特权提升） <strong>和</strong>PASTA <strong>（</strong>攻击<strong>模拟</strong>和攻击过程<strong>）<strong><strong>威胁</strong></strong>分析）信息安全从未</strong>如此美味！下面我们详细介绍一下STRIDE。STRIDE 由两位 Microsoft 安全研究人员于 1999 年撰写，至今仍然具有重要意义。STRIDE 包括六个主要原则，我有详细如下表：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>原则</strong></td>
+<td><strong>描述</strong></td>
+</tr>
+<tr>
+<td>欺骗</td>
+<td>该原则要求您对访问系统的请求和用户进行身份验证。欺骗涉及恶意方错误地将自己标识为另一方。<br><br>通过加密的访问密钥（例如 API 密钥）或签名有助于修复此威胁。</td>
+</tr>
+<tr>
+<td>篡改</td>
+<td>通过为系统或应用程序提供防篡改措施，您可以帮助确保数据的完整性。访问的数据必须保持完整且准确。<br><br>例如，商店在食品上使用密封件。</td>
+</tr>
+<tr>
+<td>否认</td>
+<td>该原则规定了服务的使用，例如记录系统或应用程序的活动以进行跟踪。</td>
+</tr>
+<tr>
+<td>信息披露</td>
+<td>处理多个用户信息的应用程序或服务需要进行适当配置，以仅显示与所有者相关的信息。</td>
+</tr>
+<tr>
+<td>拒绝服务</td>
+<td>应用程序和服务会消耗系统资源，这两件事应该有适当的措施，以便滥用应用程序&#x2F;服务不会导致整个系统瘫痪。</td>
+</tr>
+<tr>
+<td>特权提升</td>
+<td>对于应用程序或服务来说，这是最坏的情况。这意味着用户能够将其授权升级到更高级别（即管理员）。这种情况通常会导致进一步的利用或信息泄露。</td>
+</tr>
+</tbody></table>
+<p>违反安全称为事件。尽管有严格的威胁模型和安全的系统设计，但事件确实会发生。为解决和补救威胁而采取的行动称为事件响应 (IR)，是网络安全的整个职业道路。</p>
+<p>使用紧急程度和影响程度对事件进行分类。紧急程度将取决于所面临的攻击类型、影响将取决于受影响的系统以及对业务运营的影响。</p>
+<p><img src="https://tryhackme-images.s3.amazonaws.com/user-uploads/5de96d9ca744773ea7ef8c00/room-content/ab0cc8478b0bce9a400187f559d36dd6.png" srcset="/img/loading.gif" lazyload>  </p>
+<p>事件由计算机安全事件响应团队 (CSIRT) 进行响应，<strong>该****团队</strong>是<strong>预先****安排</strong>的<strong>具有</strong>系统和&#x2F;或当前事件技术知识的<strong>员工</strong>组。为了成功解决事件，这些步骤通常被称为事件响应的六个阶段，如下表所列：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>行动</strong></td>
+<td><strong>描述</strong></td>
+</tr>
+<tr>
+<td>准备</td>
+<td>我们是否有适当的资源和计划来应对安全事件？</td>
+</tr>
+<tr>
+<td>鉴别</td>
+<td>是否已正确识别威胁和威胁行为者以便我们做出响应？</td>
+</tr>
+<tr>
+<td>遏制</td>
+<td>能否遏制威胁&#x2F;安全事件以防止其他系统或用户受到影响？</td>
+</tr>
+<tr>
+<td>根除</td>
+<td>消除主动威胁。</td>
+</tr>
+<tr>
+<td>恢复</td>
+<td>对受影响的系统进行全面审查，以恢复正常运营。</td>
+</tr>
+<tr>
+<td>得到教训</td>
+<td>从事件中可以学到什么？也就是说，如果是由于网络钓鱼电子邮件造成的，则应该对员工进行更好的培训以检测网络钓鱼电子邮件。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" class="category-chain-item">网络安全</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%90%86%E8%AE%BA/" class="category-chain-item">理论</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/WriteUp/" class="print-no-link">#WriteUp</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>安全原则</div>
+      <div>https://cohawv.github.io/2022/09/10/安全原则 Principles of Security/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Cohawv</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年9月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/09/28/WriteUp-THM-Alfred/" title="WriteUp-THM-Alfred">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">WriteUp-THM-Alfred</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://Cohawv.github.io" target="_blank" rel="nofollow noopener"><span>Cohawv</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
